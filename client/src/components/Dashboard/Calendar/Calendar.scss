@@ -1,0 +1,47 @@
+.calendar {
+  margin: 10px;
+  min-height: 50vh;
+}
+
+/* Modal Footer Buttons are disaligned otherwise */
+.btn-block + .btn-block {
+  margin-top: 0;
+}
+
+/* Button group overlaps airbnb datepicker */
+.btn-group > .btn.active {
+  z-index: auto;
+}
+
+// background:  rgb(255, 157, 96) !important;
+// color:  rgba(229, 103, 23, 0.8) !important;
+
+.DateInput_input__focused {
+  border-bottom-color: rgba(229, 103, 23, 0.8) !important;
+}
+
+.CalendarDay__selected,
+.CalendarDay__selected:active,
+.CalendarDay__selected:hover {
+  background: rgb(255, 157, 96) !important;
+  border-color: rgba(229, 103, 23, 0.8) !important;
+}
+
+.calendar {
+  & .btn-primary {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
+  }
+  & .btn-primary:not(:disabled):not(.disabled):active,
+  .btn-primary:not(:disabled):not(.disabled).active,
+  .show > .btn-primary.dropdown-toggle {
+    color: #212529;
+    background-color: #d39e00;
+    border-color: #c69500;
+  }
+  & .alert-info {
+    color: rgba(229, 103, 23, 0.8) !important;
+    background-color: rgba(255, 157, 96, 0.2) !important;
+  }
+}

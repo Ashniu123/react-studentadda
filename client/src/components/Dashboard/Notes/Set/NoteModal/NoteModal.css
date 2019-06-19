@@ -1,0 +1,22 @@
+.notemodal__backdrop {
+  opacity: 0.7 !important; }
+
+.notemodal__body {
+  align-self: center; }
+
+.notemodal__content {
+  background-color: transparent; }
+
+.notemodal__action-button {
+  border-radius: 50%; }
+
+.notemodal__border__none {
+  border: none; }
+
+.modal-title {
+  text-transform: capitalize; }
+
+.close {
+  color: #dc3545; }
+  .close:not(:disabled):not(.disabled):hover, .close:not(:disabled):not(.disabled):focus {
+    color: #fd051c; }

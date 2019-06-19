@@ -1,0 +1,18 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
+  "rules": {
+    "no-param-reassign": "off",
+    "prettier/prettier": ["error"],
+    "comma-dangle": ["error", "never"],
+    "arrow-parens": ["error", "always"],
+    "linebreak-style": "off",
+    "no-underscore-dangle": "off",
+    "no-prototype-builtins": "off"
+  }
+}

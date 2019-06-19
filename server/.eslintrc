@@ -1,0 +1,18 @@
+{
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "plugins": ["prettier", "mocha"],
+  "rules": {
+    "no-param-reassign": "off",
+    "prettier/prettier": ["error"],
+    "comma-dangle": ["error", "never"],
+    "arrow-parens": ["error", "always"],
+    "linebreak-style": "off",
+    "no-underscore-dangle": "off",
+    "no-prototype-builtins": "off"
+  },
+  "globals": {
+    "notificationMessage": true,
+    "responseMessage": true,
+    "mailMessage": true
+  }
+}

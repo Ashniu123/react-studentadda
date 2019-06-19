@@ -1,0 +1,46 @@
+.setitem {
+  width: 12rem;
+  height: 17rem;
+  background-color: #9c27b0;
+  text-align: center;
+  position: relative;
+}
+
+.setoptions {
+  font-size: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.settitle {
+  text-transform: capitalize;
+  font-size: 2rem;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.wiggles {
+  animation-name: wiggle;
+  animation-duration: 500ms;
+  animation-iteration-count: 1000000000;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(2deg);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+  100% {
+    transform: rotate(2deg);
+  }
+}

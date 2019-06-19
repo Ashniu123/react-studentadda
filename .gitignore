@@ -1,0 +1,8 @@
+# IDE stuff
+.vscode/
+.idea/
+
+node_modules/
+public/dist/
+.env.test
+.env.development

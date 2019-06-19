@@ -1,0 +1,67 @@
+{
+  "FAIL": {
+    "UNAUTHORISED": {
+      "success": false,
+      "message": "User not authorised",
+      "status": "UNAUTHORISED"
+    },
+    "INVALID_TOKEN": {
+      "success": false,
+      "message": "No valid Auth Token",
+      "status": "INVALID_TOKEN"
+    },
+    "SOMETHING_WRONG": {
+      "success": false,
+      "message": "Sorry, Something went wrong",
+      "status": "SOMETHING_WRONG"
+    },
+    "INC_INV_DATA": {
+      "success": false,
+      "message": "Incomplete or invalid data passed",
+      "status": "INC_INV_DATA"
+    },
+    "USER": {
+      "EXISTS": {
+        "success": false,
+        "message": "User Already exists",
+        "status": "USER_EXISTS"
+      },
+      "NOT_EXISTS": {
+        "success": false,
+        "message": "User does not exists",
+        "status": "USER_NOT_EXISTS"
+      }
+    },
+    "INVALID_CRED": {
+      "success": false,
+      "message": "Wrong Username or Password",
+      "status": "INVALID_CRED"
+    },
+    "NOT_FOUND": {
+      "success": false,
+      "message": "Requested Resource Not Found",
+      "status": "NOT_FOUND"
+    }
+  },
+  "SUCCESS": {
+    "SUCCESS": {
+      "success": true,
+      "status": "SUCCESS"
+    },
+    "LOGIN": {
+      "success": true,
+      "message": "Welcome!",
+      "status": "LOGIN"
+    },
+    "REGISTER": {
+      "success": true,
+      "message": "User Added",
+      "status": "REGISTER"
+    },
+    "IT_WORKS": {
+      "success": true,
+      "message": "Connected to server",
+      "status": "IT_WORKS"
+    }
+  }
+}

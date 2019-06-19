@@ -1,0 +1,65 @@
+.bg-dark {
+  background-color: rgba(11, 10, 10, 0.8) !important;
+}
+
+.navbar-animate a {
+  position: relative;
+  z-index: 1;
+
+  &,
+  &::before,
+  &::after {
+    transition: all 0.5s;
+  }
+
+  &:hover {
+    color: #ff7600 !important;
+    cursor: pointer;
+  }
+
+  &::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    height: 1px;
+    content: '.';
+    color: transparent;
+    background: #ffffff;
+    visibility: none;
+    opacity: 0;
+    z-index: -1;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    visibility: visible;
+    height: 100%;
+  }
+}
+
+@mixin profile-width-height($width, $height) {
+  margin-right: 5px;
+  background: 50% 50% no-repeat; /* 50% 50% centers image in div */
+  background-size: auto 100%; /* Interchange this value depending on prefering width vs. height */
+  width: $width;
+  height: $height;
+  border-radius: 50%;
+}
+
+.profile-img {
+  float: left;
+  @include profile-width-height(25px, 25px);
+}
+
+.avatar {
+  @include profile-width-height(100px, 100px);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
