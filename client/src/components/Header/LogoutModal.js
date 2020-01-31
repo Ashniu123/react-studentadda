@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { ModalBody, ModalHeader, ModalFooter, Button, Form } from 'reactstrap';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { ModalBody, ModalHeader, ModalFooter, Button, Form } from "reactstrap";
+import { connect } from "react-redux";
 
-import { startLogout } from '../../actions/auth';
+import { startLogout } from "../../actions/auth";
 
 export class LogoutModal extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export class LogoutModal extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <ModalHeader toggle={this.props.toggle}>Logout</ModalHeader>
         <Form onSubmit={this.handleSubmit} autoComplete="on">
           <ModalBody>Are you sure you want to logout?</ModalBody>
@@ -31,16 +31,13 @@ export class LogoutModal extends Component {
             </Button>
           </ModalFooter>
         </Form>
-      </React.Fragment>
+      </>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  startLogout: () => dispatch(startLogout())
+  startLogout: () => dispatch(startLogout()),
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(LogoutModal);
+export default connect(undefined, mapDispatchToProps)(LogoutModal);

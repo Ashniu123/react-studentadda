@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import HomeJumbotron from './HomeJumbotron/HomeJumbotron';
-import HomeList from './HomeList/HomeList';
+import HomeJumbotron from "./HomeJumbotron/HomeJumbotron";
+import HomeList from "./HomeList/HomeList";
 
-import './Home.css';
+import "./Home.scss";
 
 const Home = () => (
   <main>

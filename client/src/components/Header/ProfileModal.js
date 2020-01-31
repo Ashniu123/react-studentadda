@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Col, ModalBody, ModalHeader, ModalFooter, Button, Form } from 'reactstrap';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { Col, ModalBody, ModalHeader, ModalFooter, Button, Form } from "reactstrap";
+import { connect } from "react-redux";
 
 export class ProfileModal extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export class ProfileModal extends Component {
   componentDidMount() {
     // fetch profile details here
     setTimeout(() => {
-      this.setState({ isLoading: false, profileimg: '/images/couple.png' });
+      this.setState({ isLoading: false, profileimg: "/images/couple.png" });
     }, 1000);
   }
 
@@ -26,7 +26,7 @@ export class ProfileModal extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <ModalHeader toggle={this.props.toggle}>Profile</ModalHeader>
         {this.state.isLoading ? (
           <ModalBody className="align-self-center">
@@ -49,12 +49,9 @@ export class ProfileModal extends Component {
             </ModalFooter>
           </Form>
         )}
-      </React.Fragment>
+      </>
     );
   }
 }
 
-export default connect(
-  undefined,
-  undefined
-)(ProfileModal);
+export default connect(undefined, undefined)(ProfileModal);

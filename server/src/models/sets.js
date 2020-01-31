@@ -1,44 +1,34 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
 
-const notesSchema = new Schema(
-  {
-    pageno: {
-      type: Number,
-      required: [true, 'pageno is required']
-    },
-    objectref: {
-      type: String,
-      required: [true, 'objectref is required']
-    }
-  },
-  {
-    timestamps: true
-  }
-);
+const { Schema } = mongoose;
 
 const setsSchema = new Schema(
   {
     title: {
       type: String,
-      required: [true, 'Title is required']
+      required: [true, "Title is required"],
     },
     description: {
       type: String,
-      default: ''
+      default: "",
     },
     color: {
       type: String,
-      default: '#9c27b0'
+      default: "#9c27b0",
     },
     notes: {
-      type: [notesSchema],
-      default: []
-    }
+      type: [
+        {
+          type: String,
+          required: [true, "page is required"],
+        },
+      ],
+      default: [],
+    },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
-module.exports = mongoose.model('set', setsSchema);
+module.exports = mongoose.model("set", setsSchema);

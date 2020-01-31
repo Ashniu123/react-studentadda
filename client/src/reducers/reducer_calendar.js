@@ -8,7 +8,7 @@ import {
   REMOVE_EVENT,
   REMOVE_SUCCESS,
   ERROR_EVENT
-} from '../actions/calendar';
+} from "../actions/calendar";
 
 const defaultCalendarState = { isFetching: false, events: [] };
 

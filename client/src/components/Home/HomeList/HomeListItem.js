@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const HomeListItem = ({ head, text, img, reverse }) => (
   <div className="card">

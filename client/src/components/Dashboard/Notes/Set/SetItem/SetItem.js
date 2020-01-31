@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import './SetItem.css';
+import "./SetItem.scss";
 
 const SetItem = (props) => {
   return (

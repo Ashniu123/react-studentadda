@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, MESSAGE, LOGOUT } from '../actions/auth';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, MESSAGE, LOGOUT } from "../actions/auth";
 
 const defaultAuthState = { isLogging: false };
 

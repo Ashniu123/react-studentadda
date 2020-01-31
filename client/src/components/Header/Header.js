@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Collapse,
   Navbar,
@@ -7,17 +7,17 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Modal
-} from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+  Modal,
+} from "reactstrap";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-import LoginModal from './LoginModal';
-import RegisterModal from './RegisterModal';
-import LogoutModal from './LogoutModal';
-import ProfileModal from './ProfileModal';
+import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
+import LogoutModal from "./LogoutModal";
+import ProfileModal from "./ProfileModal";
 
-import './Header.css';
+import "./Header.scss";
 
 export class Header extends Component {
   constructor(props) {
@@ -25,29 +25,32 @@ export class Header extends Component {
 
     this.state = {
       NavbarToggled: false,
-      modal: false
+      modal: false,
     };
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
   }
+
   toggleNavbar() {
     this.setState({
-      NavbarToggled: !this.state.NavbarToggled
+      NavbarToggled: !this.state.NavbarToggled,
     });
   }
+
   toggleModal(modalType) {
     this.setState({
       modal: !this.state.modal,
-      modalType: modalType
+      modalType,
     });
   }
+
   render() {
     let navitems = [];
     if (!this.props.token) {
       const items = [
-        { text: 'Login', modalType: <LoginModal toggle={this.toggleModal} /> },
-        { text: 'Register', modalType: <RegisterModal toggle={this.toggleModal} /> }
+        { text: "Login", modalType: <LoginModal toggle={this.toggleModal} /> },
+        { text: "Register", modalType: <RegisterModal toggle={this.toggleModal} /> },
       ];
       navitems = items.map((item, index) => {
         return (
@@ -57,7 +60,7 @@ export class Header extends Component {
         );
       });
     } else {
-      let name = localStorage.getItem('name') || sessionStorage.getItem('name');
+      let name = localStorage.getItem("name") || sessionStorage.getItem("name");
       name = JSON.parse(name);
       name = `${name.firstName} ${name.lastName}`;
       navitems.push(
@@ -67,7 +70,7 @@ export class Header extends Component {
           >
             <img src="/images/couple.png" alt="Profile" className="profile-img" /> {name}
           </NavLink>
-        </NavItem>
+        </NavItem>,
       );
 
       // Logout
@@ -76,7 +79,7 @@ export class Header extends Component {
           <NavLink onClick={this.toggleModal.bind(this, <LogoutModal toggle={this.toggleModal} />)}>
             Logout
           </NavLink>
-        </NavItem>
+        </NavItem>,
       );
     }
 
@@ -84,7 +87,7 @@ export class Header extends Component {
       <header>
         <Navbar color="dark" className="navbar-dark" expand="md">
           <NavbarBrand tag={Link} to="/">
-            <img src="/images/logo.png" alt="StudentAdda" style={{ height: '45px' }} />
+            <img src="/images/logo.png" alt="StudentAdda" style={{ height: "45px" }} />
           </NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} />
           <Collapse isOpen={this.state.NavbarToggled} navbar>
@@ -104,7 +107,7 @@ export class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.auth.token
+  token: state.auth.token,
 });
 
 export default connect(mapStateToProps)(Header);

@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import Notes from './Notes/Notes';
-import Calendar from './Calendar/Calendar';
+import Notes from "./Notes/Notes";
+import Calendar from "./Calendar";
 
 const Dashboard = () => (
   <main>

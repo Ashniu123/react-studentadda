@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 // import { FilePond, File, registerPlugin } from 'react-filepond';
 // import 'filepond/dist/filepond.min.css';
@@ -21,9 +21,9 @@ import React from 'react';
 // 	FilePondPluginImageTransform
 // );
 
-import SetComponent from './Set/Set';
+import SetComponent from "./Set/Set";
 
-import './Notes.css';
+import "./Notes.scss";
 
 const Notes = () => (
   <div className="notes">

@@ -1,11 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import React from "react";
+import { connect } from "react-redux";
+import { Route, Redirect } from "react-router-dom";
 
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 
-import './Route.css';
+import "./Route.scss";
 
 export const PrivateRoute = ({
   // isLoggedIn,
@@ -34,7 +34,7 @@ export const PrivateRoute = ({
 
 const mapStateToProps = (state) => ({
   // isLoggedIn: !!state.auth.isLoggedIn // uncomment for dev-server only
-  token: !!state.auth.token
+  token: !!state.auth.token,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

@@ -1,4 +1,4 @@
-import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_MESSAGE } from '../actions/register';
+import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_MESSAGE } from "../actions/register";
 
 const defaultRegisterState = { isRegistering: false };
 

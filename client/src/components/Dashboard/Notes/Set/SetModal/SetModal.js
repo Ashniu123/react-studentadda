@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Modal,
   ModalHeader,
@@ -9,25 +9,27 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
-} from 'reactstrap';
-import FontAwesome from 'react-fontawesome';
-import { GithubPicker } from 'react-color';
+  Input,
+} from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { GithubPicker } from "react-color";
 
-import { startAddSet, startEditSet, startRemoveSet } from '../../../../../actions/note';
+import { startAddSet, startEditSet, startRemoveSet } from "../../../../../actions/note";
 
-import './SetModal.css';
+import "./SetModal.scss";
 
 export class SetModal extends Component {
+  colors = ["#B80000", "#DB3E00", "#008B02", "#006B76", "#1273DE", "#004DCF", "#5300EB", "#9C27B0"];
   constructor(props) {
     super(props);
 
     this.state = {
-      title: props.data.title || '',
-      description: props.data.description || '',
-      color: props.data.color || '#9c27b0',
+      title: props.data.title || "",
+      description: props.data.description || "",
+      color: props.data.color || this.colors[Math.floor(Math.random() * this.colors.length)],
       isHandlingAction: false,
-      error: ''
+      error: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,97 +40,96 @@ export class SetModal extends Component {
 
   handleSubmit(e, type = this.props.type) {
     e.preventDefault();
-    console.log(type);
     this.setState(
       {
-        error: '',
-        isHandlingAction: true
+        error: "",
+        isHandlingAction: true,
       },
       () => {
         switch (type) {
-          case 'add': {
+          case "add": {
             const setObj = {
               title: this.state.title,
               description: this.state.description,
-              color: this.state.color
+              color: this.state.color,
             };
             this.props
               .startAddSet(setObj)
               .then(() => {
                 this.setState({
-                  isHandlingAction: false
+                  isHandlingAction: false,
                 });
                 this.props.toggle();
               })
               .catch((err) => {
                 this.setState({
-                  error: 'Error adding set!',
-                  isHandlingAction: false
+                  error: "Error adding set!",
+                  isHandlingAction: false,
                 });
               });
             break;
           }
-          case 'edit':
+          case "edit":
             const setObj = {
               id: this.props.data.id,
               title: this.state.title,
               description: this.state.description,
-              color: this.state.color
+              color: this.state.color,
             };
             this.props
               .startEditSet(setObj)
               .then(() => {
                 this.setState({
-                  isHandlingAction: false
+                  isHandlingAction: false,
                 });
                 this.props.toggle();
               })
               .catch((err) => {
                 this.setState({
-                  error: 'Error editing set!',
-                  isHandlingAction: false
+                  error: "Error editing set!",
+                  isHandlingAction: false,
                 });
               });
             break;
-          case 'remove':
+          case "remove":
             this.props
               .startRemoveSet(this.props.data.id)
               .then(() => {
                 this.setState({
-                  isHandlingAction: false
+                  isHandlingAction: false,
                 });
                 this.props.toggle();
               })
               .catch((err) => {
                 console.log(err);
                 this.setState({
-                  error: 'Error removing set!',
-                  isHandlingAction: false
+                  error: "Error removing set!",
+                  isHandlingAction: false,
                 });
               });
             break;
           default:
-            console.log('Invalid type');
+            console.log("Invalid type");
         }
-      }
+      },
     );
   }
 
   handleTitleChange(event) {
     this.setState({
-      title: event.target.value
+      title: event.target.value,
     });
   }
 
   handleDescriptionChange(event) {
     this.setState({
-      description: event.target.value
+      description: event.target.value,
     });
   }
 
   handleColorChange(color, event) {
     this.setState({
-      color: color.hex
+      color: color.hex,
     });
   }
 
@@ -136,14 +137,14 @@ export class SetModal extends Component {
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
         <ModalHeader toggle={this.props.toggle}>
-          {this.props.type === 'add' ? 'Add Set' : 'Edit Set'}
-          {this.state.isHandlingAction && <FontAwesome name="spinner" spin size="lg" />}
+          {this.props.type === "add" ? "Add Set" : "Edit Set"}
+          {this.state.isHandlingAction && <FontAwesomeIcon icon={faSpinner} spin size="lg" />}
         </ModalHeader>
         <Form onSubmit={this.handleSubmit}>
           <ModalBody>
             {this.state.error && (
               <div>
-                <span className="text-danger">{this.state.error + ' Try Again!'}</span>
+                <span className="text-danger">{`${this.state.error} Try Again!`}</span>
               </div>
             )}
             <FormGroup>
@@ -176,30 +177,21 @@ export class SetModal extends Component {
                 width="50%"
                 color={this.state.color}
                 onChange={this.handleColorChange}
-                colors={[
-                  '#B80000',
-                  '#DB3E00',
-                  '#008B02',
-                  '#006B76',
-                  '#1273DE',
-                  '#004DCF',
-                  '#5300EB',
-                  '#9C27B0'
-                ]}
+                colors={this.colors}
               />
             </FormGroup>
           </ModalBody>
           <ModalFooter>
             <Button type="submit" color="warning" block>
-              {this.props.type === 'add' ? 'Add' : 'Update'}
+              {this.props.type === "add" ? "Add" : "Update"}
             </Button>
-            {this.props.type === 'edit' && (
+            {this.props.type === "edit" && (
               <Button
                 color="danger"
                 block
-                onClick={this.handleSubmit.bind(this, { preventDefault: () => null }, 'remove')}
+                onClick={this.handleSubmit.bind(this, { preventDefault: () => null }, "remove")}
               >
-                {' '}
+                {" "}
                 Remove
               </Button>
             )}
@@ -216,10 +208,7 @@ export class SetModal extends Component {
 const mapDispatchToProps = (dispatch) => ({
   startAddSet: (setObj) => dispatch(startAddSet(setObj)),
   startRemoveSet: (id) => dispatch(startRemoveSet(id)),
-  startEditSet: (setObj) => dispatch(startEditSet(setObj))
+  startEditSet: (setObj) => dispatch(startEditSet(setObj)),
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(SetModal);
+export default connect(undefined, mapDispatchToProps)(SetModal);

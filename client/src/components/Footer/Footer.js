@@ -1,41 +1,41 @@
-import React from 'react';
-import { Row, Col } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
 
-import './Footer.css';
+import "./Footer.scss";
 
-const linksToOblivion = ['Help and FAQ', 'About Us', 'Privacy and Terms'];
+const linksToOblivion = ["Help and FAQ", "About Us", "Privacy and Terms"];
 const socialLinks = [
   {
-    class: 'btn-social-google',
-    href: 'http://google.com/+',
-    icon: 'fa fa-google-plus'
+    class: "btn-social-google",
+    href: "http://google.com/+",
+    icon: "fa fa-google-plus",
   },
   {
-    class: 'btn-social-facebook',
-    href: 'http://www.facebook.com/profile.php?id=',
-    icon: 'fa fa-facebook'
+    class: "btn-social-facebook",
+    href: "http://www.facebook.com/profile.php?id=",
+    icon: "fa fa-facebook",
   },
   {
-    class: 'btn-social-linkedin',
-    href: 'http://www.linkedin.com/in/',
-    icon: 'fa fa-linkedin'
+    class: "btn-social-linkedin",
+    href: "http://www.linkedin.com/in/",
+    icon: "fa fa-linkedin",
   },
   {
-    class: 'btn-social-twitter',
-    href: 'http://twitter.com/',
-    icon: 'fa fa-twitter'
+    class: "btn-social-twitter",
+    href: "http://twitter.com/",
+    icon: "fa fa-twitter",
   },
   {
-    class: 'btn-social-youtube',
-    href: 'http://youtube.com/',
-    icon: 'fa fa-youtube'
+    class: "btn-social-youtube",
+    href: "http://youtube.com/",
+    icon: "fa fa-youtube",
   },
   {
-    class: 'btn-social-mail',
-    href: 'mailto:studentadda@outlook.com',
-    icon: 'fa fa-envelope-o'
-  }
+    class: "btn-social-mail",
+    href: "mailto:studentadda@outlook.com",
+    icon: "fa fa-envelope-o",
+  },
 ];
 
 const Footer = (props) => (
@@ -58,7 +58,8 @@ const Footer = (props) => (
           <h5>Our Address</h5>
           <address>
             121, L &amp; T Road,
-            <br />L &amp; T, Mumbai
+            <br />
+            L &amp; T, Mumbai
             <br />
             <br />
             <i className="fa fa-phone" /> +852 1234 5678

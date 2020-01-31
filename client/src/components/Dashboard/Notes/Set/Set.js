@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Button, Row, Col } from 'reactstrap';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Button, Row, Col } from "reactstrap";
 
-import { startSetsFetch } from '../../../../actions/note';
-import Loading from '../../../Loading/Loading';
-import SetItem from './SetItem/SetItem';
-import SetModal from './SetModal/SetModal';
-import NoteModal from './NoteModal/NoteModal';
+import { startSetsFetch } from "../../../../actions/note";
+import Loading from "../../../Loading/Loading";
+import SetItem from "./SetItem/SetItem";
+import SetModal from "./SetModal/SetModal";
+import NoteModal from "./NoteModal/NoteModal";
 
-export class SetofNotes extends Component {
+export class SetOfNotes extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       modal: false,
-      error: false
+      error: false,
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -27,14 +27,14 @@ export class SetofNotes extends Component {
     this.setState({
       modal: !this.state.modal,
       modalType: type,
-      setData: data
+      setData: data,
     });
   }
 
   startSetsFetchHelper() {
     this.setState(
       {
-        error: false
+        error: false,
       },
       () => {
         this.props
@@ -42,10 +42,10 @@ export class SetofNotes extends Component {
           .then(() => {})
           .catch((err) => {
             this.setState({
-              error: true
+              error: true,
             });
           });
-      }
+      },
     );
   }
 
@@ -54,15 +54,15 @@ export class SetofNotes extends Component {
   }
 
   handleAddSet() {
-    this.toggleModal.call(this, 'add');
+    this.toggleModal.call(this, "add");
   }
 
   handleEditSet(data) {
-    this.toggleModal.call(this, 'edit', data);
+    this.toggleModal.call(this, "edit", data);
   }
 
   handleOpenSet(data) {
-    this.toggleModal.call(this, 'note', data);
+    this.toggleModal.call(this, "note", data);
   }
 
   render() {
@@ -78,7 +78,7 @@ export class SetofNotes extends Component {
         </Col>
       </Row>
     ) : (
-      <React.Fragment>
+      <>
         <Row className="align-items-end">
           <Col>
             <Button color="info" onClick={this.handleAddSet}>
@@ -99,7 +99,7 @@ export class SetofNotes extends Component {
           })}
         </Row>
         {this.state.modal ? (
-          this.state.modalType === 'note' ? (
+          this.state.modalType === "note" ? (
             <NoteModal
               isOpen={this.state.modal}
               toggle={this.toggleModal}
@@ -114,21 +114,18 @@ export class SetofNotes extends Component {
             />
           )
         ) : null}
-      </React.Fragment>
+      </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
   isFetching: state.notes.isFetching,
-  sets: state.notes.sets
+  sets: state.notes.sets,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startSetsFetch: () => dispatch(startSetsFetch())
+  startSetsFetch: () => dispatch(startSetsFetch()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SetofNotes);
+export default connect(mapStateToProps, mapDispatchToProps)(SetOfNotes);

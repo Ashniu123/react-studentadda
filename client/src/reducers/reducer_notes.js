@@ -15,8 +15,8 @@ import {
   REMOVE_NOTE_SUCCESS,
   REMOVE_SET,
   REMOVE_SET_SUCCESS,
-  ERROR_NOTE
-} from '../actions/note';
+  ERROR_NOTE,
+} from "../actions/note";
 
 const defaultNoteState = { isFetching: false, sets: [] };
 
@@ -25,23 +25,33 @@ export default (state = defaultNoteState, action) => {
     case FETCH_SETS: {
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     }
     case FETCH_SETS_SUCCESS: {
       return {
         ...state,
-        sets: action.sets,
-        isFetching: false
+        sets: action.sets.map((set) => {
+          set.notes = [];
+          return set;
+        }),
+        isFetching: false,
       };
     }
     case FETCH_NOTE: {
       return state;
     }
     case FETCH_NOTE_SUCCESS: {
+      state.sets.map((set) => {
+        if (action.note.note && set.id === action.note.id) {
+          set.notes[action.note.pageno] = action.note.note;
+        }
+        return set;
+      });
+      console.log(state.sets);
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
       };
     }
     case ADD_SET: {
@@ -54,16 +64,24 @@ export default (state = defaultNoteState, action) => {
       return {
         ...state,
         sets: setsUpdate,
-        isFetching: false
+        isFetching: false,
       };
     }
     case ADD_NOTE: {
       return state;
     }
     case ADD_NOTE_SUCCESS: {
+      console.log(state.sets);
+      state.sets.map((set) => {
+        if (action.note.note && set.id === action.note.id) {
+          set.notes[action.note.pageno] = action.note.note;
+        }
+        return set;
+      });
+      console.log(state.sets);
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
       };
     }
     case EDIT_SET: {
@@ -82,7 +100,7 @@ export default (state = defaultNoteState, action) => {
       return {
         ...state,
         sets: newSets,
-        isFetching: false
+        isFetching: false,
       };
     }
     case EDIT_NOTE: {
@@ -91,7 +109,7 @@ export default (state = defaultNoteState, action) => {
     case EDIT_NOTE_SUCCESS: {
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
       };
     }
     case REMOVE_SET: {
@@ -103,22 +121,29 @@ export default (state = defaultNoteState, action) => {
       return {
         ...state,
         sets: newSets,
-        isFetching: false
+        isFetching: false,
       };
     }
     case REMOVE_NOTE: {
       return state;
     }
     case REMOVE_NOTE_SUCCESS: {
+      const newSets = state.sets.filter((set) => {
+        if (set.id === action.note.id) {
+          set.notes.splice(action.note.pageno, 1);
+        }
+        return set;
+      });
       return {
         ...state,
-        isFetching: false
+        sets: newSets,
+        isFetching: false,
       };
     }
     case ERROR_NOTE: {
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
       };
     }
     default:

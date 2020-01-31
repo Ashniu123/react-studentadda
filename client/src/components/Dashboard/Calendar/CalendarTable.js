@@ -1,14 +1,14 @@
-import React from 'react';
-import { Table } from 'reactstrap';
-import moment from 'moment';
-import shortid from 'shortid';
+import React from "react";
+import { Table } from "reactstrap";
+import moment from "moment";
+import shortid from "shortid";
 
 const CalendarTableRow = ({ index, title, start, end, description }) => (
   <tr>
     <td>{index}</td>
     <td>{title}</td>
-    <td>{moment(start).format('DD MMMM, YYYY')}</td>
-    <td>{moment(end).format('DD MMMM, YYYY')}</td>
+    <td>{moment(start).format("DD MMMM, YYYY")}</td>
+    <td>{moment(end).format("DD MMMM, YYYY")}</td>
     <td>{description}</td>
   </tr>
 );

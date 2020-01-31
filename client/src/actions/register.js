@@ -1,47 +1,38 @@
-import fixtures from '../fixtures/fixtures';
-import axios from 'axios';
+import axios from "axios";
+import fixtures from "../fixtures/fixtures";
 
-export const REGISTER_REQUEST = 'REGISTER_REQUEST',
-  REGISTER_SUCCESS = 'REGISTER_SUCCESS',
-  REGISTER_MESSAGE = 'REGISTER_MESSAGE';
+export const REGISTER_REQUEST = "REGISTER_REQUEST";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_MESSAGE = "REGISTER_MESSAGE";
 
 export const registerSuccess = () => ({
-  type: REGISTER_SUCCESS
+  type: REGISTER_SUCCESS,
 });
 
 export const registerMessage = (message) => ({
   type: REGISTER_MESSAGE,
-  message
+  message,
 });
 
 export const registerRequest = () => ({
-  type: REGISTER_REQUEST
+  type: REGISTER_REQUEST,
 });
 
 export const startRegister = (registerObj) => (dispatch) => {
   dispatch(registerRequest());
-  const { name, email, password } = registerObj;
-  const queryString = ` mutation {
-		register (
-			name: { firstName: "${name.firstName}", lastName: "${name.lastName}" },
-			email: "${email}",
-			password: "${password}"
-		)
-	}`;
+  console.log(registerObj);
   axios
-    .post(`${fixtures.SERVER_URI}/user`, { query: queryString })
-    .then((result) => {
-      const payload = result.data.data.register;
-      if (payload.status) {
+    .post(`${fixtures.SERVER_URI}/register`, { ...registerObj })
+    .then(({ data }) => {
+      const { status, message } = data;
+      if (status) {
         dispatch(registerSuccess());
-        dispatch(registerMessage('Registeration Successful!'));
+        dispatch(registerMessage("Registration Successful!"));
       } else {
-        console.log(payload.data);
-        dispatch(registerMessage(payload.message));
+        dispatch(registerMessage(message));
       }
     })
     .catch((err) => {
-      console.log('error');
       console.log(err);
       dispatch(registerMessage(err.message));
     });

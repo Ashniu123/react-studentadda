@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Modal,
   ModalHeader,
@@ -9,11 +9,12 @@ import {
   CustomInput,
   FormGroup,
   Label,
-  Form
-} from 'reactstrap';
-import FontAwesome from 'react-fontawesome';
+  Form,
+} from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-import { startAddNote } from '../../../../../actions/note';
+import { startAddNote, startRemoveNote } from "../../../../../actions/note";
 
 export class NoteNested extends Component {
   constructor(props) {
@@ -21,8 +22,8 @@ export class NoteNested extends Component {
 
     this.state = {
       isHandlingAction: false,
-      file: '',
-      error: ''
+      note: "",
+      error: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,41 +32,65 @@ export class NoteNested extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log('submitted');
     this.setState(
       {
         isHandlingAction: true,
-        error: ''
+        error: "",
       },
       () => {
-        // add switch case here
-        setTimeout(() => {
-          this.setState(
-            {
-              isHandlingAction: false
-            },
-            () => {
-              this.props.toggle();
-            }
-          );
-        }, 1000);
-      }
+        switch (this.props.type) {
+          case "Add": {
+            this.props
+              .startAddNote({
+                id: this.props.setId,
+                note: this.state.note,
+                pageno: this.props.pageno,
+              })
+              .then(() => {
+                this.setState({ isHandlingAction: false });
+                this.props.toggle();
+              })
+              .catch(() => {
+                this.setState({ isHandlingAction: false, error: "Error adding note" });
+              });
+            break;
+          }
+          case "Remove": {
+            this.props
+              .startRemoveNote({
+                id: this.props.setId,
+                pageno: this.props.pageno,
+              })
+              .then(() => {
+                this.setState({ isHandlingAction: false });
+                this.props.toggle();
+              })
+              .catch(() => {
+                this.setState({ isHandlingAction: false, error: "Error removing note" });
+              });
+            break;
+          }
+          default: {
+          }
+        }
+      },
     );
   }
 
   handleFileUpload(e) {
-    // e.persist();
-    // console.log(e);
     const file = e.target.files[0];
-    if (['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      console.log('File is valid');
-      this.setState({
-        file,
-        error: ''
-      });
+    if (["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        this.setState({
+          note: reader.result,
+          error: "",
+        });
+      };
     } else {
       this.setState({
-        error: 'Invalid file type. Only images allowed.'
+        error: "Invalid file type. Only images allowed.",
       });
     }
   }
@@ -75,13 +100,13 @@ export class NoteNested extends Component {
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle}>
         <Form onSubmit={this.handleSubmit}>
           <ModalHeader>
-            {this.props.type}{' '}
-            {this.state.isHandlingAction && <FontAwesome name="spinner" spin size="lg" />}
+            {this.props.type}{" "}
+            {this.state.isHandlingAction && <FontAwesomeIcon icon={faSpinner} spin size="lg" />}
           </ModalHeader>
           <ModalBody>
             {this.state.error && <div className="text-danger">{this.state.error}</div>}
-            {this.props.type === 'Remove' ? (
-              'Confirm delete note?'
+            {this.props.type === "Remove" ? (
+              "Confirm delete note?"
             ) : (
               <FormGroup>
                 <Label for="noteUpload">File Browser</Label>
@@ -95,7 +120,7 @@ export class NoteNested extends Component {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button type="submit" color={this.props.type === 'Remove' ? 'danger' : 'warning'}>
+            <Button type="submit" color={this.props.type === "Remove" ? "danger" : "warning"}>
               {this.props.type}
             </Button>
             <Button onClick={this.props.toggle}>Cancel</Button>
@@ -109,10 +134,8 @@ export class NoteNested extends Component {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-  startAddNote: (noteObj) => dispatch(startAddNote(noteObj))
+  startAddNote: (noteObj) => dispatch(startAddNote(noteObj)),
+  startRemoveNote: (noteObj) => dispatch(startRemoveNote(noteObj)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NoteNested);
+export default connect(mapStateToProps, mapDispatchToProps)(NoteNested);

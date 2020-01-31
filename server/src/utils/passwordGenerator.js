@@ -1,6 +1,23 @@
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 const SALT_LENGTH = 64;
+
+const md5 = (string) => {
+  return crypto
+    .createHash("md5")
+    .update(string)
+    .digest("hex");
+};
+
+const generateSalt = (len) => {
+  const set = "0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ";
+  let salt = "";
+  for (let i = 0; i < len; i += 1) {
+    const p = Math.floor(Math.random() * set.length);
+    salt += set[p];
+  }
+  return salt;
+};
 
 function createHash(password) {
   const salt = generateSalt(SALT_LENGTH);
@@ -14,24 +31,7 @@ function validateHash(hash, password) {
   return hash === validHash;
 }
 
-function generateSalt(len) {
-  const set = '0123456789abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ';
-  let salt = '';
-  for (let i = 0; i < len; i++) {
-    let p = Math.floor(Math.random() * set.length);
-    salt += set[p];
-  }
-  return salt;
-}
-
-function md5(string) {
-  return crypto
-    .createHash('md5')
-    .update(string)
-    .digest('hex');
-}
-
 module.exports = {
   hash: createHash,
-  validate: validateHash
+  validate: validateHash,
 };

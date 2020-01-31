@@ -1,25 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import Reactotron from "./ReactotronConfig";
 
-import { startLoginOnAppStartup } from './actions/auth';
-import reducers from './reducers';
+import { startLoginOnAppStartup } from "./actions/auth";
+import reducers from "./reducers";
 
-import registerServiceWorker from './registerServiceWorker';
+import * as serviceWorker from "./serviceWorker";
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'font-awesome/css/font-awesome.css';
-import './index.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.scss";
 
-import AppRouter from './routes/AppRouter';
+import AppRouter from "./routes/AppRouter";
 
 // create store with middleware
-const store = applyMiddleware(thunk)(createStore)(
-  reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = applyMiddleware(thunk)(createStore)(reducers, Reactotron.createEnhancer());
 
 // TODO: Make use of a single Modal everywhere -> dashboard page remaining (Calendar modal & Notes Modal)
 // TODO: add PropTypes everywhere!
@@ -29,9 +26,10 @@ ReactDOM.render(
   <Provider store={store}>
     <AppRouter />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root"),
 );
-registerServiceWorker();
+
+serviceWorker.unregister();
 
 (() => {
   store.dispatch(startLoginOnAppStartup());

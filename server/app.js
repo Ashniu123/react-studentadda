@@ -1,33 +1,25 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+require("./config/mongoDatabase")(); // Connection to Database
 
-require('./config/mongoDatabase')(); // Connection to Database
-
-// global configs
-global.notificationMessage = require('./config/notification');
-global.responseMessage = require('./config/responseMessage.json');
+global.responseMessage = require("./config/responseMessage.json");
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(require('morgan')('dev'));
-app.use(require('cors')());
+app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
+app.use(bodyParser.json({ limit: "5mb" }));
+app.use(require("morgan")("common"));
+app.use(require("cors")());
 
-// app.use(express.static(path.join(__dirname, '../client/public')));
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
-app.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname, '..', 'client' , 'build', 'index.html'));
-});
+app.use("/api", require("./src/routes"));
 
-app.use('/api', require('./src/routes/routes'));
-
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 
 app.listen(port, () => {
-	console.log(`Server is running on port ${port}!`);
+  console.log(`Server is running on port ${port}!`);
 });
 
 module.exports = app;

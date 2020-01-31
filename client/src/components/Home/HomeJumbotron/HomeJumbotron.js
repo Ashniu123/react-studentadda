@@ -1,5 +1,5 @@
-import React from 'react';
-import { Jumbotron, Container } from 'reactstrap';
+import React from "react";
+import { Jumbotron, Container } from "reactstrap";
 
 const HomeJumbotron = () => (
   <Jumbotron fluid className="my-0">

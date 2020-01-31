@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
   Modal,
   ModalHeader,
@@ -10,28 +10,30 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
-} from 'reactstrap';
+  Input,
+} from "reactstrap";
 
-import DateTimeField from 'react-datetime';
-import 'react-datetime/css/react-datetime.css';
-import FontAwesome from 'react-fontawesome';
+import DateTimeField from "react-datetime";
+import "react-datetime/css/react-datetime.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-// TODO: Handle errors properly
-import { startAddEvent, startEditEvent, startRemoveEvent } from '../../../actions/calendar';
+import { startAddEvent, startEditEvent, startRemoveEvent } from "../../../actions/calendar";
 
 export class EventModal extends Component {
   constructor(props) {
     super(props);
 
+    console.log(props.data);
+
     this.state = {
       startDate: props.data.start,
       endDate: props.data.end,
       dow: props.data.dow || [],
-      title: props.data.title || '',
-      description: props.data.description || '',
+      title: props.data.title || "",
+      description: props.data.description || "",
       isHandlingAction: false,
-      error: ''
+      error: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,25 +56,25 @@ export class EventModal extends Component {
 
   handleTitleChange(event) {
     this.setState({
-      title: event.target.value
+      title: event.target.value,
     });
   }
 
   handleDescriptionChange(event) {
     this.setState({
-      description: event.target.value
+      description: event.target.value,
     });
   }
 
   handleStartDateChange(momentObj) {
     this.setState({
-      startDate: momentObj
+      startDate: momentObj,
     });
   }
 
   handleEndDateChange(momentObj) {
     this.setState({
-      endDate: momentObj
+      endDate: momentObj,
     });
   }
 
@@ -80,37 +82,36 @@ export class EventModal extends Component {
     e.preventDefault();
     this.setState(
       {
-        error: '',
-        isHandlingAction: true
+        error: "",
+        isHandlingAction: true,
       },
       () => {
         switch (type) {
-          case 'add': {
+          case "add": {
             const data = {
               title: this.state.title,
               start: this.state.startDate,
               end: this.state.endDate,
               dow: this.state.dow,
-              description: this.state.description
+              description: this.state.description,
             };
             this.props
               .startAddEvent(data)
               .then(() => {
                 this.setState({
-                  isHandlingAction: false
+                  isHandlingAction: false,
                 });
-                this.props.performEventsChange(data, type);
                 this.props.toggle();
               })
               .catch((err) => {
                 this.setState({
                   isHandlingAction: false,
-                  error: 'Error adding event!'
+                  error: "Error adding event!",
                 });
               });
             break;
           }
-          case 'edit': {
+          case "edit": {
             this.props.data.title = this.state.title;
             this.props.data.start = this.state.startDate;
             this.props.data.end = this.state.endDate;
@@ -120,40 +121,38 @@ export class EventModal extends Component {
               .startEditEvent(this.props.data)
               .then(() => {
                 this.setState({
-                  isHandlingAction: false
+                  isHandlingAction: false,
                 });
-                this.props.performEventsChange(this.props.data, type);
                 this.props.toggle();
               })
               .catch((err) => {
                 this.setState({
                   isHandlingAction: false,
-                  error: 'Error editing event!'
+                  error: "Error editing event!",
                 });
               });
             break;
           }
-          case 'remove': {
+          case "remove": {
             this.props
               .startRemoveEvent(this.props.data.id)
               .then(() => {
                 this.setState({
-                  isHandlingAction: false
+                  isHandlingAction: false,
                 });
-                this.props.performEventsChange(this.props.data.id, type);
                 this.props.toggle();
               })
               .catch((err) => {
                 this.setState({
                   isHandlingAction: false,
-                  error: 'Error removing event!'
+                  error: "Error removing event!",
                 });
               });
             break;
           }
           default:
         }
-      }
+      },
     );
   }
 
@@ -161,8 +160,8 @@ export class EventModal extends Component {
     return (
       <Modal isOpen={this.props.isOpen} toggle={this.props.toggle} size="lg">
         <ModalHeader toggle={this.props.toggle}>
-          {this.props.type === 'add' ? 'Add Event  ' : 'Edit Event  '}
-          {this.state.isHandlingAction && <FontAwesome name="spinner" spin size="lg" />}
+          {this.props.type === "add" ? "Add Event" : "Edit Event"}
+          {this.state.isHandlingAction && <FontAwesomeIcon icon={faSpinner} spin size="lg" />}
         </ModalHeader>
         <Form onSubmit={this.handleSubmit}>
           <ModalBody>
@@ -209,11 +208,11 @@ export class EventModal extends Component {
             <Label className="mb-0">Repeat</Label>
             <br />
             <ButtonGroup>
-              {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(
+              {["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map(
                 (day, index) => {
                   return (
                     <Button
-                      key={'day_' + index}
+                      key={`day_${index}`}
                       color="light"
                       onClick={() => this.handleSelectedDays(index)}
                       active={this.state.dow.includes(index)}
@@ -221,21 +220,21 @@ export class EventModal extends Component {
                       {day}
                     </Button>
                   );
-                }
+                },
               )}
             </ButtonGroup>
           </ModalBody>
           <ModalFooter>
             <Button type="submit" color="warning" block>
-              {this.props.type === 'add' ? 'Add' : 'Update'}
+              {this.props.type === "add" ? "Add" : "Update"}
             </Button>
-            {this.props.type === 'edit' && (
+            {this.props.type === "edit" && (
               <Button
                 color="danger"
                 block
-                onClick={this.handleSubmit.bind(this, { preventDefault: () => null }, 'remove')}
+                onClick={this.handleSubmit.bind(this, { preventDefault: () => null }, "remove")}
               >
-                {' '}
+                {" "}
                 Remove
               </Button>
             )}
@@ -252,10 +251,7 @@ export class EventModal extends Component {
 const mapDispatchToProps = (dispatch) => ({
   startAddEvent: (eventObj) => dispatch(startAddEvent(eventObj)),
   startEditEvent: (eventObj, id) => dispatch(startEditEvent(eventObj, id)),
-  startRemoveEvent: (id) => dispatch(startRemoveEvent(id))
+  startRemoveEvent: (id) => dispatch(startRemoveEvent(id)),
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(EventModal);
+export default connect(undefined, mapDispatchToProps)(EventModal);

@@ -1,93 +1,105 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import FontAwesome from 'react-fontawesome';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+  faSpinner,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import NestedModal from "./NoteNestedModal";
+import { startNoteFetch } from "../../../../../actions/note";
 
-import NestedModal from './NoteNestedModal';
-
-import './NoteModal.css';
+import "./NoteModal.scss";
 
 export class NoteModal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: '',
+      error: "",
       currentImage: 0,
       isHandlingAction: false,
-      nestedModal: false
+      nestedModal: false,
     };
 
     this.handleNextClick = this.handleNextClick.bind(this);
     this.handlePrevClick = this.handlePrevClick.bind(this);
-    // this.startNoteFetchHelper = this.startNoteFetchHelper.bind(this);
+    this.startNoteFetchHelper = this.startNoteFetchHelper.bind(this);
     this.toggleNested = this.toggleNested.bind(this);
   }
 
   componentDidMount() {
-    // this.startNoteFetchHelper(0);
+    this.startNoteFetchHelper(0);
   }
 
   toggleNested(type) {
     this.setState({
       nestedModal: !this.state.nestedModal,
-      modalType: type
+      modalType: type,
     });
   }
 
   handleNextClick() {
+    if (!this.props.notes[this.state.currentImage]) {
+      return;
+    }
     this.setState(
       {
-        currentImage: this.state.currentImage + 1
+        currentImage: this.state.currentImage + 1,
       },
       () => {
         if (!this.props.notes[this.state.currentImage]) {
           this.startNoteFetchHelper(this.state.currentImage);
         }
-      }
+      },
     );
   }
 
   handlePrevClick() {
+    if (this.state.currentImage === 0) {
+      return;
+    }
     this.setState(
       {
-        currentImage: this.state.currentImage - 1
+        currentImage: this.state.currentImage - 1,
       },
       () => {
         if (!this.props.notes[this.state.currentImage]) {
           this.startNoteFetchHelper(this.state.currentImage);
         }
-      }
+      },
     );
   }
 
-  // startNoteFetchHelper(pageno) {
-  //   const noteObj = {
-  //     id: this.props.data.id,
-  //     pageno
-  //   };
-  //   this.setState(
-  //     {
-  //       isHandlingAction: true,
-  //       error: ''
-  //     },
-  //     () => {
-  //       this.props
-  //         .startNoteFetch(noteObj)
-  //         .then(() => {
-  //           this.setState({
-  //             isHandlingAction: false
-  //           });
-  //         })
-  //         .catch(() => {
-  //           this.setState({
-  //             isHandlingAction: false,
-  //             error: 'Error fetching note'
-  //           });
-  //         });
-  //     }
-  //   );
-  // }
+  startNoteFetchHelper(pageno) {
+    const noteObj = {
+      id: this.props.data.id,
+      pageno,
+    };
+    this.setState(
+      {
+        isHandlingAction: true,
+        error: "",
+      },
+      () => {
+        this.props
+          .startNoteFetch(noteObj)
+          .then(() => {
+            this.setState({
+              isHandlingAction: false,
+            });
+          })
+          .catch(() => {
+            this.setState({
+              isHandlingAction: false,
+              error: "Error fetching note",
+            });
+          });
+      },
+    );
+  }
 
   render() {
     return (
@@ -104,31 +116,31 @@ export class NoteModal extends Component {
         </ModalHeader>
         <ModalBody className="notemodal__body">
           {this.props.notes.length > 0 ? (
-            <React.Fragment>
-              <FontAwesome
-                name="chevron-left"
-                size="2x"
-                onClick={this.handlePrevClick}
-                disabled={this.state.currentImage === 0}
-              />
+            <>
               {this.state.isHandlingAction ? (
-                <FontAwesome name="spinner" spin size="lg" />
+                <FontAwesomeIcon icon={faSpinner} spin size="lg" />
               ) : (
                 <img
                   src={this.props.notes[this.state.currentImage]}
                   alt={`this.props.data.title_P${this.state.currentImage + 1}`}
+                  className="notemodal__image"
                 />
               )}
-
-              <FontAwesome
-                name="chevron-right"
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                size="2x"
+                onClick={this.handlePrevClick}
+                style={{ float: "left" }}
+              />
+              <FontAwesomeIcon
+                icon={faChevronRight}
                 size="2x"
                 onClick={this.handleNextClick}
-                disabled={this.state.currentImage + 1 === this.props.notes.length}
+                style={{ float: "right" }}
               />
-            </React.Fragment>
+            </>
           ) : (
-            'No notes added for this subject.'
+            "No notes added for this set."
           )}
 
           {this.state.nestedModal && (
@@ -136,6 +148,8 @@ export class NoteModal extends Component {
               toggle={this.toggleNested}
               isOpen={this.state.nestedModal}
               type={this.state.modalType}
+              setId={this.props.data.id}
+              pageno={this.state.currentImage}
             />
           )}
         </ModalBody>
@@ -143,16 +157,16 @@ export class NoteModal extends Component {
           <Button
             color="warning"
             className="notemodal__action-button"
-            onClick={this.toggleNested.bind(this, 'Add')}
+            onClick={this.toggleNested.bind(this, "Add")}
           >
             +
           </Button>
           <Button
             color="danger"
             className="notemodal__action-button"
-            onClick={this.toggleNested.bind(this, 'Remove')}
+            onClick={this.toggleNested.bind(this, "Remove")}
           >
-            <FontAwesome name="trash" />
+            <FontAwesomeIcon icon={faTrash} />
           </Button>
         </ModalFooter>
       </Modal>
@@ -160,18 +174,12 @@ export class NoteModal extends Component {
   }
 }
 
-const mapStateToProps = (state, props) => {
-  const notesArr = state.notes.sets.filter((setitem) => setitem.id === props.data.id);
-  return {
-    notes: notesArr[0]
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  // startNoteFetch: (noteObj) => dispatch(startNoteFetch(noteObj)),
+const mapStateToProps = (state, props) => ({
+  notes: state.notes.sets.filter((set) => set.id === props.data.id)[0].notes,
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NoteModal);
+const mapDispatchToProps = (dispatch) => ({
+  startNoteFetch: (noteObj) => dispatch(startNoteFetch(noteObj)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoteModal);

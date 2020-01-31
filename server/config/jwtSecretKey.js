@@ -1,4 +1,7 @@
-const generateRandomString = () => { return Math.random().toString(36).substr(2); }
+const fs = require("fs");
+const path = require("path");
 
-// module.exports = generateRandomString() + generateRandomString() + generateRandomString();
-module.exports = '12345';
+const pathToSecret = path.join(__dirname, "secret.key");
+const generatedRandomString = () => fs.readFileSync(pathToSecret);
+
+module.exports = generatedRandomString;

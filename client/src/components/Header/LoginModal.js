@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   ModalBody,
   ModalHeader,
@@ -8,26 +8,27 @@ import {
   FormGroup,
   Label,
   Input,
-  Alert
-} from 'reactstrap';
-import { connect } from 'react-redux';
-import FontAwesome from 'react-fontawesome';
+  Alert,
+} from "reactstrap";
+import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-import { startLogin } from '../../actions/auth';
+import { startLogin } from "../../actions/auth";
 
 export class LoginModal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      error: '',
-      email: '',
-      pass: '',
-      rememberMe: true
+      error: "",
+      email: "",
+      pass: "",
+      rememberMe: true,
     };
 
     if (this.props.isLoggedIn) {
-      this.props.history.push('/dashboard');
+      this.props.history.push("/dashboard");
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,7 +44,7 @@ export class LoginModal extends Component {
       const loginObj = {
         email: this.state.email,
         password: this.state.pass,
-        rememberMe: this.state.rememberMe
+        rememberMe: this.state.rememberMe,
       };
       this.props.startLogin(loginObj);
     }
@@ -51,7 +52,7 @@ export class LoginModal extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <>
         <ModalHeader toggle={this.props.toggle}>Login</ModalHeader>
         <Form onSubmit={this.handleSubmit} autoComplete="on">
           <ModalBody className="pb-0">
@@ -108,29 +109,26 @@ export class LoginModal extends Component {
             >
               {this.props.isLogging ? (
                 <span>
-                  <FontAwesome name="spinner" spin size="lg" /> Logging In
+                  <FontAwesomeIcon icon={faSpinner} spin size="lg" /> Logging In
                 </span>
               ) : (
-                'Login'
+                "Login"
               )}
             </Button>
           </ModalFooter>
         </Form>
-      </React.Fragment>
+      </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
   isLogging: state.auth.isLogging,
-  message: state.auth.message
+  message: state.auth.message,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  startLogin: (loginObj) => dispatch(startLogin(loginObj))
+  startLogin: (loginObj) => dispatch(startLogin(loginObj)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginModal);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginModal);

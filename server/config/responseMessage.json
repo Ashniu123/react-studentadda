@@ -55,7 +55,7 @@
     },
     "REGISTER": {
       "success": true,
-      "message": "User Added",
+      "message": "User Registered",
       "status": "REGISTER"
     },
     "IT_WORKS": {
