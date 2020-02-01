@@ -28,7 +28,7 @@ ReactDOM.render(
   document.getElementById("root"),
 );
 
-serviceWorker.unregister();
+process.env.NODE_ENV === "production" ? serviceWorker.register() : serviceWorker.unregister();
 
 (() => {
   store.dispatch(startLoginOnAppStartup());
