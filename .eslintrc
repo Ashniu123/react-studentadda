@@ -2,9 +2,8 @@
   "extends": ["airbnb-base", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
   "rules": {
-    "no-param-reassign": "off",
     "prettier/prettier": ["error"],
-    "comma-dangle": ["error", "never"],
+    "no-param-reassign": "off",
     "arrow-parens": ["error", "always"],
     "linebreak-style": "off",
     "no-underscore-dangle": "off",
