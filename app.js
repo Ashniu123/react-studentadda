@@ -12,7 +12,7 @@ app.use(bodyParser.json({ limit: "5mb" }));
 app.use(require("morgan")("common"));
 app.use(require("cors")());
 
-app.use(express.static(path.join(__dirname, "..", "client", "build")));
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.use("/api", require("./src/routes"));
 

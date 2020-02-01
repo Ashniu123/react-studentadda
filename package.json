@@ -4,11 +4,13 @@
   "description": "Server side code for Studentadda.com",
   "main": "app.js",
   "scripts": {
-    "prod": "node app.js",
+    "start-js": "node app.js",
     "start": "nodemon app.js",
     "debug": "nodemon --inspect app.js",
     "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd client && npm run build",
+    "prod": "npm run build && npm run start-js"
   },
   "author": "Nisheet Sinvhal <nisheet1.sinvhal@gmail.com>",
   "license": "ISC",
