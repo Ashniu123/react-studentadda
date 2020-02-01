@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import Reactotron from "./ReactotronConfig";
 
 import { startLoginOnAppStartup } from "./actions/auth";
 import reducers from "./reducers";
@@ -16,7 +15,7 @@ import "./index.scss";
 import AppRouter from "./routes/AppRouter";
 
 // create store with middleware
-const store = applyMiddleware(thunk)(createStore)(reducers, Reactotron.createEnhancer());
+const store = applyMiddleware(thunk)(createStore)(reducers);
 
 // TODO: Make use of a single Modal everywhere -> dashboard page remaining (Calendar modal & Notes Modal)
 // TODO: add PropTypes everywhere!
