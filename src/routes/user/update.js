@@ -1,3 +1,5 @@
+const User = require("../../models/user");
+
 module.exports = async ({ body }, res) => {
   if (body.avatar || (body.name && body.name.firstName && body.name.lastName)) {
     try {
@@ -14,8 +16,8 @@ module.exports = async ({ body }, res) => {
       await doc.save();
       res.json(responseMessage.SUCCESS.SUCCESS);
     } catch (e) {
-      console.error(err);
-      resolve(responseMessage.FAIL.SOMETHING_WRONG);
+      console.error(e);
+      res.json(responseMessage.FAIL.SOMETHING_WRONG);
     }
   } else {
     res.json(responseMessage.FAIL.INC_INV_DATA);

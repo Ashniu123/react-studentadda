@@ -1,3 +1,4 @@
 export default {
-  SERVER_URI: "http://localhost:3002/api" || window.location.origin,
+  SERVER_URI:
+    process.env.NODE_ENV === "production" ? window.location.origin : "http://localhost:3002/api",
 };
