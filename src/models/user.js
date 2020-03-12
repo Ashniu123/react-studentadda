@@ -14,7 +14,7 @@ const userSchema = new Schema(
         type: String,
         required: [true, "Last Name is required"],
         trim: true,
-      }
+      },
     },
     password: {
       type: String,
@@ -34,18 +34,18 @@ const userSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "event",
-      }
+      },
     ],
     sets: [
       {
         type: Schema.Types.ObjectId,
         ref: "set",
-      }
-    ]
+      },
+    ],
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = mongoose.model("user", userSchema);

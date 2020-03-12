@@ -28,7 +28,7 @@ module.exports = async ({ body }, res) => {
         res.json(responseMessage.SUCCESS.REGISTER);
       } else {
         res.json(responseMessage.FAIL.USER.EXISTS);
-      } 
+      }
     } catch (err) {
       console.error(err);
       res.json(responseMessage.FAIL.SOMETHING_WRONG);

@@ -12,7 +12,7 @@ module.exports = async ({ params }, res) => {
         {
           $project: {
             _id: 0,
-            note: { $arrayElemAt: ["$notes", parseInt(pageno)] },
+            note: { $arrayElemAt: ["$notes", parseInt(pageno, 10)] },
           },
         },
       ]);

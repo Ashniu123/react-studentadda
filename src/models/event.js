@@ -23,7 +23,7 @@ const eventSchema = new Schema({
   description: {
     type: String,
     default: "",
-  }
+  },
 });
 
 module.exports = mongoose.model("event", eventSchema);

@@ -18,7 +18,7 @@ module.exports = async ({ body }, res) => {
         res.json(responseMessage.FAIL.INVALID_CRED);
       }
     } catch (e) {
-      console.error(err);
+      console.error(`login: ${e}`);
       res.json(responseMessage.FAIL.SOMETHING_WRONG);
     }
   } else {
